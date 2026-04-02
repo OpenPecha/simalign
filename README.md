@@ -1,150 +1,90 @@
-SimAlign: Similarity Based Word Aligner
-==============
+<h1 align="center">
+  <br>
+  <a href="https://buddhistai.tools/"><img src="https://raw.githubusercontent.com/WeBuddhist/visual-assets/refs/heads/main/logo/WB-logo-purple.png" alt="OpenPecha" width="150"></a>
+  <br>
+</h1>
+
+<h1 align="center">simalign</h1>
 
 <p align="center">
-    <br>
-    <img alt="Alignment Example" src="https://raw.githubusercontent.com/cisnlp/simalign/master/assets/example.png" width="300"/>
-    <br>
-<p>
+  |MIT| |Python| |NLP|
+</p>
 
-SimAlign is a high-quality word alignment tool that uses static and contextualized embeddings and **does not require parallel training data**.
+Obtain Word Alignments using Pretrained Language Models (e.g., mBERT)
 
-The following table shows how it compares to popular statistical alignment models:
+## Table of Contents
 
-|            | ENG-CES | ENG-DEU | ENG-FAS | ENG-FRA | ENG-HIN | ENG-RON |
-| ---------- | ------- | ------- | ------- | ------- | ------- | ------- |
-| fast-align | .78     | .71     | .46     | .84     | .38     | .68     |
-| eflomal    | .85     | .77     | .63     | .93     | .52     | .72     |
-| mBERT-Argmax | .87     | .81     | .67     | .94     | .55     | .65     |
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Development](#development)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [How to get help](#how-to-get-help)
+- [Terms of use](#terms-of-use)
 
-Shown is F1, maximum across subword and word level. For more details see the [Paper](https://arxiv.org/pdf/2004.08728.pdf).
+## Features
 
+- NLP tooling for Tibetan/Indic text processing
 
-Installation and Usage
---------
+## Prerequisites
 
-Tested with Python 3.7, Transformers 3.1.0, Torch 1.5.0. Networkx 2.4 is optional (only required for Match algorithm). 
-For full list of dependencies see `setup.py`.
-For installation of transformers see [their repo](https://github.com/huggingface/transformers#installation).
+- Python 3.8+
+- pip
 
-Download the repo for use or alternatively install with pip
+## Installation
 
-`pip install --upgrade git+https://github.com/cisnlp/simalign.git#egg=simalign`
+```bash
+# Clone the repository
+git clone https://github.com/OpenPecha/simalign.git
+cd simalign
 
+# Install dependencies
+pip install -r requirements.txt
 
-An example for using our code:
+# Install the package
+pip install -e .
+```
+
+## Usage
+
 ```python
-from simalign import SentenceAligner
-
-# making an instance of our model.
-# You can specify the embedding model and all alignment settings in the constructor.
-myaligner = SentenceAligner(model="bert", token_type="bpe", matching_methods="mai")
-
-# The source and target sentences should be tokenized to words.
-src_sentence = ["This", "is", "a", "test", "."]
-trg_sentence = ["Das", "ist", "ein", "Test", "."]
-
-# The output is a dictionary with different matching methods.
-# Each method has a list of pairs indicating the indexes of aligned words (The alignments are zero-indexed).
-alignments = myaligner.get_word_aligns(src_sentence, trg_sentence)
-
-for matching_method in alignments:
-    print(matching_method, ":", alignments[matching_method])
-
-# Expected output:
-# mwmf (Match): [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
-# inter (ArgMax): [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
-# itermax (IterMax): [(0, 0), (1, 1), (2, 2), (3, 3), (4, 4)]
-```
-For more examples of how to use our code see `scripts/align_example.py`.
-
-Demo
---------
-
-An online demo is available [here](https://simalign.cis.lmu.de/).
-
-
-Gold Standards
---------
-Links to the gold standars used in the paper are here: 
-
-
-| Language Pair  | Citation | Type |Link |
-| ------------- | ------------- | ------------- | ------------- |
-| ENG-CES | Marecek et al. 2008 | Gold Alignment | http://ufal.mff.cuni.cz/czech-english-manual-word-alignment |
-| ENG-DEU | EuroParl-based | Gold Alignment | www-i6.informatik.rwth-aachen.de/goldAlignment/ |
-| ENG-FAS | Tvakoli et al. 2014 | Gold Alignment | http://eceold.ut.ac.ir/en/node/940 |
-| ENG-FRA |  WPT2003, Och et al. 2000,| Gold Alignment | http://web.eecs.umich.edu/~mihalcea/wpt/ |
-| ENG-HIN |   WPT2005 | Gold Alignment | http://web.eecs.umich.edu/~mihalcea/wpt05/ |
-| ENG-RON |  WPT2005 Mihalcea et al. 2003 | Gold Alignment | http://web.eecs.umich.edu/~mihalcea/wpt05/ |
-        
-        
-Evaluation Script
---------
-For evaluating the output alignments use `scripts/calc_align_score.py`.
-
-The gold alignment file should have the same format as SimAlign outputs.
-Sure alignment edges in the gold standard have a '-' between the source and the target indices and the possible edges have a 'p' between indices.
-For sample parallel sentences and their gold alignments from ENG-DEU, see `samples`.
-
-
-Publication
---------
-
-If you use the code, please cite 
-
-```
-@inproceedings{jalili-sabet-etal-2020-simalign,
-    title = "{S}im{A}lign: High Quality Word Alignments without Parallel Training Data using Static and Contextualized Embeddings",
-    author = {Jalili Sabet, Masoud  and
-      Dufter, Philipp  and
-      Yvon, Fran{\c{c}}ois  and
-      Sch{\"u}tze, Hinrich},
-    booktitle = "Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing: Findings",
-    month = nov,
-    year = "2020",
-    address = "Online",
-    publisher = "Association for Computational Linguistics",
-    url = "https://www.aclweb.org/anthology/2020.findings-emnlp.147",
-    pages = "1627--1643",
-}
+# Add usage example here
 ```
 
-Feedback
---------
+## Development
 
-Feedback and Contributions more than welcome! Just reach out to @masoudjs or @pdufter. 
+```bash
+# Install dev dependencies
+pip install -e .[dev]
 
+# Run tests
+pytest
 
-FAQ
---------
+# Lint
+flake8
+```
 
-##### Do I need parallel data to train the system?
+## Testing
 
-No, no parallel training data is required.
+```bash
+pytest tests/
+```
 
-##### Which languages can be aligned?
+## Contributing
 
-This depends on the underlying pretrained multilingual language model used. For example, if mBERT is used, it covers 104 languages as listed [here](https://github.com/google-research/bert/blob/master/multilingual.md).
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
 
-##### Do I need GPUs for running this?
+Please read [CONTRIBUTING.md](https://github.com/OpenPecha/.github/blob/main/CONTRIBUTING.md) for details.
 
-Each alignment simply requires a single forward pass in the pretrained language model. While this is certainly 
-faster on GPU, it runs fine on CPU. On one GPU (GeForce GTX 1080 Ti) it takes around 15-20 seconds to align 500 parallel sentences.
+## How to get help
+* File an issue.
+* Join our [discord](https://discord.com/invite/7GFpPFSTeA).
 
-
-TODOs
---------
-
-* Add static embedding functionality
-* Add wrappers for fast-align, eflomal
-* Add data download scripts 
-
-
-
-License
--------
-
-Copyright (C) 2020, Masoud Jalili Sabet, Philipp Dufter
-
-A full copy of the license can be found in LICENSE.
+## Terms of use
+MIT is licensed under the [MIT License](/LICENSE).
